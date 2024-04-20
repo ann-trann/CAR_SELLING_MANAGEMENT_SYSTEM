@@ -1,9 +1,242 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/SQLTemplate.sql to edit this template
- */
-/**
- * Author:  7713b
- * Created: Apr 20, 2024
- */
+ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE;
+
+CREATE USER MYDATABASE IDENTIFIED BY 123;
+
+GRANT ALL PRIVILEGES TO MYDATABASE; 
+
+-- Tao bang NhanVien
+
+CREATE TABLE NhanVien(
+  MaNV INT,
+  TenNV NVARCHAR2(20),
+  SDT VARCHAR(10) UNIQUE,
+  QueQuan NVARCHAR2(30),
+  GioiTinh NVARCHAR2(3),
+  Luong NUMBER(10),
+  ChucVu NVARCHAR2(10),
+  TaiKhoan VARCHAR2(6),
+  MatKhau VARCHAR2(4)
+);
+
+-- Tao khoa chinh cho bang NhanVien
+
+ALTER TABLE NhanVien ADD CONSTRAINT PK_NV PRIMARY KEY (MaNV);
+
+-- Them rang buoc
+
+ALTER TABLE NhanVien 
+  ADD CONSTRAINT NV_TENNV_NNULL CHECK('TenNV' IS NOT NULL)
+  ADD CONSTRAINT NV_SDT_NNULL CHECK('SDT' IS NOT NULL)
+  ADD CONSTRAINT NV_QUEQUAN_NNULL CHECK('QueQuan' IS NOT NULL)
+  ADD CONSTRAINT NV_GIOTINH_THUOC CHECK('GioiTinh' IN ('Nam', 'Nữ'))
+  ADD CONSTRAINT NV_LUONG_NNULL CHECK('Luong' IS NOT NULL)
+  ADD CONSTRAINT NV_CHUCVU_THUOC CHECK('ChucVu' IN ('Quản lý', 'Nhân viên kho', 'Nhân viên kỹ thuật', 'Nhân viên bán hàng'))
+  ADD CONSTRAINT NV_TAIKHOAN_NNUL CHECK('TaiKhoan' IS NOT NULL)
+  ADD CONSTRAINT NV_MATKHAU_NNUL CHECK('MatKhau' IS NOT NULL); 
+
+-- Tao bang KhachHang
+
+CREATE TABLE KhachHang(
+  MaKH INT,
+  TenKH NVARCHAR2(20),
+  SDT VARCHAR(10),
+  QueQuan NVARCHAR2(30),
+  GioiTinh NVARCHAR2(3),
+  SoTienDaMua NUMBER(13, 2) DEFAULT 0
+);
+
+-- Tao khoa chinh
+
+ALTER TABLE KhachHang ADD CONSTRAINT PK_KhachHang PRIMARY KEY (MaKH);
+
+-- Tao rang buoc
+
+ALTER TABLE KHACHHANG
+  ADD CONSTRAINT KH_TenKH_NNULL CHECK('TenKH' IS NOT NULL)
+  ADD CONSTRAINT KH_SDT_NNULL CHECK('SDT' IS NOT NULL)
+  ADD CONSTRAINT KH_GioiTinh_NNULL CHECK('GioiTinh' IN ('Nam', 'Nữ'));
+
+-- Tao bang NhaCungCap
+
+CREATE TABLE NhaCungCap(
+  MaNCC VARCHAR(3),
+  TenNCC NVARCHAR2(30),
+  DiaChi NVARCHAR2(50),
+  HangXe VARCHAR2(20)
+);
+
+-- Tao khoa chinh
+
+ALTER TABLE NhaCungCap ADD CONSTRAINT PK_NCC PRIMARY KEY (MaNCC);
+
+-- Tao rang buoc 
+
+ALTER TABLE NHACUNGCAP  
+  ADD CONSTRAINT NCC_TenNCC CHECK('TenNCC' IS NOT NULL)
+  ADD CONSTRAINT NCC_DiaChi CHECK('DiaChi' IS NOT NULL)
+  ADD CONSTRAINT NCC_HangXe CHECK('HangXe' IS NOT NULL);
+
+-- Tao bang xe
+
+CREATE TABLE Xe (
+  MaXe VARCHAR2(16),
+  TenXe NVARCHAR2(30),
+  MauXe NVARCHAR2(15),
+  KieuDangXe NVARCHAR2(20),
+  MaNCC VARCHAR(3), 
+  LoaiDongCo NVARCHAR2(30),
+  DungTich NUMBER(3, 2),
+  MucTieuHao NUMBER(3, 2),
+  TrongLuong NUMBER(4, 2),
+  LoaiLop NVARCHAR2(20),
+  KichThuocMamXe NUMBER(5, 2),
+  TrangBiNgoaiThat NVARCHAR2(20),
+  TrangBiNoiThat NVARCHAR2(20),
+  GiaNhap NUMBER(10),
+  GiaBan NUMBER(10),
+  NamSX NUMBER,
+  ThoiGianBaoHanh INT,
+  TrangThai NVARCHAR2(20) DEFAULT 'Trong kho'
+);
+
+-- Tao khoa chinh
+
+ALTER TABLE Xe ADD CONSTRAINT PK_Xe PRIMARY KEY (MaXe);
+
+-- Tao khoa ngoai
+
+ALTER TABLE Xe ADD CONSTRAINT FK_Xe_NCC_MaNCC FOREIGN KEY (MaNCC) REFERENCES NhaCungCap(MaNCC);
+
+-- Tao rang buoc
+
+ALTER TABLE Xe
+  ADD CONSTRAINT XE_TenXe_NNULL CHECK('TenXe' IS NOT NULL)
+  ADD CONSTRAINT Xe_NamSX_NNULL CHECK('NamSX' IS NOT NULL)
+  ADD CONSTRAINT Xe_GiaNhap_NNULL CHECK('GiaNhap' IS NOT NULL)
+  ADD CONSTRAINT Xe_GiaBan_NNULL CHECK('GiaBan' IS NOT NULL)
+  ADD CONSTRAINT Xe_TrangThai_Thuoc CHECK('TrangThai' IN ('Trong kho', 'Đã bán'));
+
+-- Tao bang phu kien
+
+CREATE TABLE PhuKien(
+  MaPK VARCHAR2(5),
+  TenPK NVARCHAR2(30),
+  SoLuong NUMBER DEFAULT 0,
+  GiaNhap NUMBER DEFAULT 0,
+  GiaBan NUMBER DEFAULT 0
+);
+
+-- Tao khoa chinh
+
+ALTER TABLE PhuKien ADD CONSTRAINT PK_PhuKien PRIMARY KEY (MaPK);
+
+-- Tao rang buoc
+
+ALTER TABLE PhuKien 
+  ADD CONSTRAINT PK_TenPK_NNULL CHECK('TenPK' IS NOT NULL)
+  ADD CONSTRAINT PK_SoLuong_NNULL CHECK ('SoLuong' IS NOT NULL)
+  ADD CONSTRAINT PK_GiaNhap_NNULL CHECK('GiaNhap' IS NOT NULL)
+  ADD CONSTRAINT PK_GiaBan_NNULL CHECK('GiaBan' IS NOT NULL); 
+
+-- Tao bang XeDaBan
+
+CREATE TABLE XeDaBan(
+  MaXe VARCHAR2(16),
+  MaKH INT,
+  NgayMua DATE,
+  ThoiGianBaoHanh DATE
+);
+
+-- Tao khoa chinh
+
+ALTER TABLE XeDaBan ADD CONSTRAINT PK_XeDaBan PRIMARY KEY (MaXe);
+
+-- Tao khoa ngoai
+
+ALTER TABLE XeDaBan ADD CONSTRAINT FK_XeDaBan_KhachHang FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH);
+
+-- Tao rang buoc
+
+ALTER TABLE XEDABAN ADD CONSTRAINT XDB_NgayMua_NNULL CHECK('NgayMua' IS NOT NULL);
+
+-- Tao bang LichSuaChua
+
+CREATE TABLE SuaChua(
+  MaSC INT,
+  MaXe VARCHAR2(16),
+  NgaySuaChua DATE UNIQUE,
+  TrangThai NVARCHAR2(20),
+  GhiChu NVARCHAR2(80) DEFAULT '',
+  NgayTraXe DATE,
+  ThanhTien NUMBER  DEFAULT 0
+);
+
+-- Tao khoa chinh
+
+ALTER TABLE SuaChua ADD CONSTRAINT PK_SC PRIMARY KEY (MaSC);
+
+-- Tao rang buoc 
+
+ALTER TABLE SUACHUA
+  ADD CONSTRAINT SC_MaXe_NNULL CHECK('MaXe' IS NOT NULL)
+  ADD CONSTRAINT SC_TrangThai CHECK ('TrangThai' IN ('Chưa hoàn thành', 'Hoàn thành'));
+
+-- Tao bang ThongTinSuaChua
+
+CREATE TABLE ThongTinSuaChua( 
+  MaSC INT,
+  MaPK VARCHAR2(5),
+  SoLuong INT DEFAULT 0
+);
+
+-- Tao khoa chinh
+
+ALTER TABLE ThongTinSuaChua ADD CONSTRAINT PK_TTSC PRIMARY KEY (MaSC, MaPK);
+
+-- Tao khoa ngoai
+
+ALTER TABLE ThongTinSuaChua ADD CONSTRAINT FK_TTSC_SC FOREIGN KEY (MaSC) REFERENCES SUaChua(MaSC);
+ALTER TABLE ThongTinSuaChua ADD CONSTRAINT FK_TTSC_PK FOREIGN KEY (MaPK) REFERENCES PhuKien(MaPK);
+
+-- Tao bang HopDongMuaXe
+
+CREATE TABLE HopDongMuaXe(
+  MaHD INT,
+  MaKH INT,
+  NgayTaoHopDong DATE,
+  TongCong NUMBER(12, 0) DEFAULT 0,
+  MaNV INT
+);
+
+-- Tao khoa chinh
+
+ALTER TABLE HopDongMuaXe ADD CONSTRAINT PK_HDMX PRIMARY KEY (MaHD);
+
+-- Tao khoa ngoai
+
+ALTER TABLE HopDongMuaXe 
+  ADD CONSTRAINT FK_HDMX_KH FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH)
+  ADD CONSTRAINT FK_HDMX_NV FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV);
+
+-- Tao bang CTHDMX (Chi tiet hop dong mua xe)
+
+CREATE TABLE CTHDMX (
+  MaHD INT,
+  MaXe VARCHAR2(16),
+  TrangThai NVARCHAR2(20) DEFAULT 'Trong kho'
+);
+
+-- Tao khoa chinh
+
+ALTER TABLE CTHDMX ADD CONSTRAINT PK_CTHDMX PRIMARY KEY (MaHD, MaXe);
+
+-- Tao khoa ngoai
+
+ALTER TABLE CTHDMX 
+  ADD CONSTRAINT FK_CTHDMX_HD FOREIGN KEY (MaHD) REFERENCES HopDongMuaXe(MaHD)
+  ADD CONSTRAINT FK_CTHDMX_Xe FOREIGN KEY (MaXe) REFERENCES Xe(MaXe);
+  
+-- Tao rang buoc
+
+ALTER TABLE CTHDMX ADD CONSTRAINT CTHDMX_TrangThai_Thuoc CHECK('TrangThai' IN ('Trong kho', 'Đã giao')); 
 
