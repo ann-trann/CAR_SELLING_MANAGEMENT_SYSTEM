@@ -4,18 +4,20 @@
  */
 package CMS.view.component;
 
+
 /**
  *
  * @author trant
  */
-public class Card extends javax.swing.JPanel {
+public class Car_card extends javax.swing.JPanel {
 
     /**
      * Creates new form Card
      */
-    public Card() {
+    public Car_card() {
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,16 +78,14 @@ public class Card extends javax.swing.JPanel {
                 .addComponent(Car, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Name)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Price)
-                            .addComponent(Quantity)))
                     .addComponent(icon_trash)
-                    .addComponent(icon_note))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(icon_note)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Price)
+                        .addComponent(Quantity)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
