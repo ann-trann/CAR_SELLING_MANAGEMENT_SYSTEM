@@ -4,6 +4,11 @@
  */
 package CMS.view.component;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import javax.swing.JFrame;
+
 /**
  *
  * @author trant
@@ -26,19 +31,82 @@ public class Header extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Out = new javax.swing.JLabel();
+        Title = new javax.swing.JLabel();
+        Name = new javax.swing.JLabel();
+        Account = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(183, 150, 107));
+
+        Out.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Out.png"))); // NOI18N
+
+        Title.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        Title.setForeground(new java.awt.Color(251, 238, 215));
+        Title.setText("Car Shop");
+
+        Name.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        Name.setForeground(new java.awt.Color(251, 238, 215));
+        Name.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        Name.setText("Name");
+
+        Account.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Account.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(Out)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Title)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 455, Short.MAX_VALUE)
+                .addComponent(Name, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Account)
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Account)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Title)
+                        .addComponent(Name))
+                    .addComponent(Out))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    private int x;
+    private int y;
+
+    public void initMoving(JFrame fram) {
+        Title.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                x = me.getX() + 68;
+                y = me.getY() + 10;
+            }
+
+        });
+     
+        Title.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent me) {
+                fram.setLocation(me.getXOnScreen() - x, me.getYOnScreen() - y);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Account;
+    private javax.swing.JLabel Name;
+    private javax.swing.JLabel Out;
+    private javax.swing.JLabel Title;
     // End of variables declaration//GEN-END:variables
 }

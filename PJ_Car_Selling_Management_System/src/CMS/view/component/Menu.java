@@ -42,7 +42,7 @@ public class Menu extends javax.swing.JPanel {
 
         panelTop = new javax.swing.JPanel();
         Title = new javax.swing.JLabel();
-        Icon = new javax.swing.JLabel();
+        In = new javax.swing.JLabel();
         listMenu = new CMS.view.swing.Menu.ListMenu<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -53,10 +53,10 @@ public class Menu extends javax.swing.JPanel {
         Title.setForeground(new java.awt.Color(183, 150, 107));
         Title.setText("Car Shop");
 
-        Icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/In.png"))); // NOI18N
-        Icon.setMaximumSize(new java.awt.Dimension(59, 59));
-        Icon.setMinimumSize(new java.awt.Dimension(59, 59));
-        Icon.setPreferredSize(new java.awt.Dimension(28, 28));
+        In.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/In.png"))); // NOI18N
+        In.setMaximumSize(new java.awt.Dimension(59, 59));
+        In.setMinimumSize(new java.awt.Dimension(59, 59));
+        In.setPreferredSize(new java.awt.Dimension(28, 28));
 
         listMenu.setBackground(new java.awt.Color(255, 249, 241));
 
@@ -67,9 +67,9 @@ public class Menu extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTopLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(Title)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Icon, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(In, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
             .addComponent(listMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelTopLayout.setVerticalGroup(
@@ -78,7 +78,7 @@ public class Menu extends javax.swing.JPanel {
                 .addGap(11, 11, 11)
                 .addGroup(panelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(Title)
-                    .addComponent(Icon, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(In, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55)
                 .addComponent(listMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE))
         );
@@ -97,7 +97,7 @@ public class Menu extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Icon;
+    private javax.swing.JLabel In;
     private javax.swing.JLabel Title;
     private CMS.view.swing.Menu.ListMenu<String> listMenu;
     private javax.swing.JPanel panelTop;
